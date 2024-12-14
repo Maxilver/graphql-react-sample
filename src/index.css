@@ -68,3 +68,7 @@ button:focus-visible {
 .no-padding-content .p-panel-content {
   padding: 0;
 }
+
+.flex-content .p-panel-content {
+  display: flex
+}

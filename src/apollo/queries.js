@@ -38,3 +38,11 @@ export const GET_LOCATIONS_BY_DIMENSION = gql`
         }
     }
 `;
+
+export const SET_TODO = gql`
+    mutation CreaeTodo ($title: String!, $completed: Boolean!) {
+        createTodo (input: { title: $title, completed: $completed }) {
+            id, title, completed
+        }
+    }
+`;

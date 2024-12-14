@@ -141,3 +141,18 @@ input FilterLocation {
     name: String
     type: String
 }
+
+type Mutation {
+    createTodo(input: CreateTodoInput!): Todo
+}
+
+type Todo {
+    id: ID
+    title: String
+    completed: Boolean
+}
+
+input CreateTodoInput {
+    title: String!
+    completed: Boolean!
+}
