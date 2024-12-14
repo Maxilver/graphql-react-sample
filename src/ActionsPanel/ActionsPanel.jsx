@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Panel } from 'primereact/panel';
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
-import { GET_DIMENSIONS, selectedDimensionVar, SET_TODO } from "../apollo/index.js";
+import { GET_DIMENSIONS, GET_LOCATIONS_BY_DIMENSION, selectedDimensionVar, SET_TODO } from "../apollo/index.js";
 import { Dropdown } from "primereact/dropdown";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Button } from "primereact/button";
@@ -39,7 +39,16 @@ export default function ActionsPanel () {
   const handleMutation = async () => {
     try {
       // Perform mutation
-      const result = await createTodo({ variables: { title: todoTitle, completed } });
+      const result = await createTodo({
+        refetchQueries: [
+          {
+            query: GET_LOCATIONS_BY_DIMENSION,
+            variables: { dimension: selectedDimension },
+          },
+          'GetLocations',
+        ],
+        variables: { title: todoTitle, completed }
+      });
       console.log('Mutation Result:', result.data.createTodo);
       toastRef.current.show({
         severity: result.data.createTodo.completed ? 'success' : 'info',
