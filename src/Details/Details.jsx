@@ -4,9 +4,17 @@ import { useQuery } from "@apollo/client";
 import { GET_EPISODES } from "../apollo/index.js";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { useNavigate, useLocation } from "react-router";
+
 
 export default function Details () {
-  const [page, setPage] = useState(1);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const params = new URLSearchParams(location.search);
+  const initialPage = parseInt(params.get('page') || '1', 10);
+
+  const [page, setPage] = useState(initialPage);
 
   const { loading, error, data, refetch } = useQuery(GET_EPISODES, {
     variables: {
@@ -30,7 +38,19 @@ export default function Details () {
 
   // Event handler for pagination
   const onPage = (event) => {
+    const newPage = event.page + 1;
     setPage(event.page + 1);
+
+    // Update the URL with the new pagination parameters
+    const newParams = new URLSearchParams(location.search);
+    newParams.set('page', newPage);
+
+
+    navigate({
+      pathname: location.pathname,
+      search: newParams.toString(),
+    });
+
     refetch({ page: event.page + 1 });
   };
 
