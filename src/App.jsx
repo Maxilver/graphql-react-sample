@@ -11,8 +11,8 @@ import 'primeicons/primeicons.css';
 
 import Dashboard from './Dashboard/Dashboard.jsx'
 import Details from './Details/Details.jsx'
-import { ApolloProvider, useQuery } from "@apollo/client";
-import { apolloClient, GET_LOCATIONS } from "./apollo/index.js";
+import { ApolloProvider } from "@apollo/client";
+import { apolloClient } from "./apollo/index.js";
 import ActionsPanel from "./ActionsPanel/ActionsPanel.jsx";
 
 function App () {

@@ -7,7 +7,7 @@ export * from './queries.js';
 loadDevMessages();
 loadErrorMessages();
 
-export const selectedLocationVar = makeVar(null);
+export const selectedDimensionVar = makeVar(null);
 
 export const apolloClient = new ApolloClient({
   uri: 'https://rickandmortyapi.com/graphql', // Replace with your GraphQL endpoint
@@ -17,7 +17,7 @@ export const apolloClient = new ApolloClient({
         fields: {
           selectedLocation: {
             read () {
-              return selectedLocationVar();
+              return selectedDimensionVar();
             }
           }
         }

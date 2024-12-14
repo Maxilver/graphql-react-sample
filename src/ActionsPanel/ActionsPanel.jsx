@@ -1,38 +1,33 @@
 import { useEffect, useState } from 'react'
 import { Panel } from 'primereact/panel';
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { GET_LOCATIONS, selectedLocationVar } from "../apollo/index.js";
+import { GET_DIMENSIONS, selectedDimensionVar } from "../apollo/index.js";
 import { Dropdown } from "primereact/dropdown";
 import { ProgressSpinner } from "primereact/progressspinner";
 
 export default function ActionsPanel () {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
-  const selectedLocation = useReactiveVar(selectedLocationVar);
+  const { loading, error, data } = useQuery(GET_DIMENSIONS);
+  const selectedDimension = useReactiveVar(selectedDimensionVar);
 
   useEffect(() => {
-    if (data?.locations?.results[0] && !selectedLocation) {
-      selectedLocationVar(locationOptions[0].value);
+    if (data?.first?.results[0] && !selectedDimension) {
+      selectedDimensionVar(data?.first?.results[0].dimension);
     }
-  }, [data, selectedLocation]);
+  }, [data, selectedDimension]);
 
   if (loading) return <ProgressSpinner style={{ width: '50px', height: '50px', display: 'block', margin: 'auto' }} />;
 
-  const locationOptions = data?.locations?.results.map(location => ({
-    label: location.name,
-    value: location.id
-  })) || [];
+  const dimensions = [...(new Set([...data.first.results, ...data.second.results, ...data.third.results].map(item => item.dimension)))]
 
-  const handleSelect = (e) => selectedLocationVar(e.value);
+  const handleSelect = (e) => selectedDimensionVar(e.value)
 
   return (
     <Panel header="Actions" className="mb-4">
       <Dropdown
-        value={selectedLocation}
-        options={locationOptions}
+        value={selectedDimension}
+        options={dimensions}
         onChange={handleSelect}
         placeholder="Select a Location"
-        optionLabel="label"
-        optionValue="value"
       />
     </Panel>
 

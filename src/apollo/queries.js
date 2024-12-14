@@ -1,12 +1,40 @@
 import { gql } from "@apollo/client";
 
-export const GET_LOCATIONS = gql`
+// Due to limitation of sample Graphql server, we cannot get distinct queries of dimensions and also can have only 20 items per request
+export const GET_DIMENSIONS = gql`
     query GetLocations {
-        locations {
+        first: locations {
             results {
-                name,
-                id,
+                dimension,
+            }
+        }
+        second: locations (page: 2) {
+            results {
+                dimension,
+            }
+        },
+        third: locations (page: 3) {
+            results {
+                dimension,
             }
         }
     }
 `
+
+export const GET_LOCATIONS_BY_DIMENSION = gql`
+    query GetCharactersByLocation($dimension: String!) {
+        locations(filter: { dimension: $dimension }) {
+            results {
+                id,
+                name,
+                type,
+                residents {
+                    name,
+                    species,
+                    image,
+                    gender,
+                }
+            }
+        }
+    }
+`;
