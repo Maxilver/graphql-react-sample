@@ -39,6 +39,22 @@ export const GET_LOCATIONS_BY_DIMENSION = gql`
     }
 `;
 
+export const GET_EPISODES = gql`
+    query GetEpisodes ($page: Int) {
+        episodes (page: $page) {
+            info {
+                pages,
+                count,
+                next,
+                prev,
+            },
+            results {
+                id, name, air_date, episode,
+            }
+        }
+    }
+`
+
 export const SET_TODO = gql`
     mutation CreaeTodo ($title: String!, $completed: Boolean!) {
         createTodo (input: { title: $title, completed: $completed }) {
