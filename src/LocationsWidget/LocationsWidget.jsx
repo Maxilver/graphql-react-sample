@@ -28,7 +28,7 @@ export default function LocationsWidget () {
   }, [data]);
 
   return (
-    <Panel header="Characters" className="no-padding-content" style={{minHeight: '695px'}}>
+    <Panel header="Locations" className="no-padding-content" style={{minHeight: '695px'}}>
       {loading ? (
         <ProgressSpinner/>
       ) : error ? (
