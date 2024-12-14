@@ -7,15 +7,20 @@ import { Button } from 'primereact/button';
 import { Panel } from 'primereact/panel';
 import { Menu } from 'primereact/menu';
 
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 
+import { default as Dashboard } from './Dashboard/Dashboard.jsx'
+import { default as Details } from './Details/Details.jsx'
+
 function App () {
   const menuItems = [
-    { label: 'Main', icon: 'pi pi-home' },
-    { label: 'Another', icon: 'pi pi-chart-bar' },
+    { label: 'Main', template: (item, options) => <Link to="/" className={options.className}>{item.label}</Link> },
+    { label: 'Details', template: (item, options) => <Link to="/details" className={options.className}>{item.label}</Link> },
   ];
 
   const [count, setCount] = useState(1)
@@ -23,7 +28,7 @@ function App () {
   const addCount = () => setCount((count) => count + 1);
 
   return (
-    <>
+    <Router>
       <PrimeReactProvider>
         <div className="grid h-screen">
           {/* Vertical Navigation Panel */}
@@ -39,40 +44,14 @@ function App () {
               <Button label="Action 3" className="p-button-text"/>
             </Panel>
 
-            {/* Widgets Grid */}
-            <div className="grid">
-              {/* Widget 1 */}
-              <div className="col-6">
-                <Panel header="Widget 1" style={{ height: '300px' }}>
-                  <p>Content for Widget 1</p>
-                </Panel>
-              </div>
-
-              {/* Widget 2 */}
-              <div className="col-6">
-                <Panel header="Widget 2" style={{ height: '300px' }}>
-                  <p>Content for Widget 2</p>
-                </Panel>
-              </div>
-
-              {/* Widget 3 */}
-              <div className="col-6">
-                <Panel header="Widget 3" style={{ height: '300px' }}>
-                  <p>Content for Widget 3</p>
-                </Panel>
-              </div>
-
-              {/* Widget 4 */}
-              <div className="col-6">
-                <Panel header="Widget 4" style={{ height: '300px' }}>
-                  <p>Content for Widget 4</p>
-                </Panel>
-              </div>
-            </div>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/details" element={<Details />} />
+            </Routes>
           </div>
         </div>
       </PrimeReactProvider>
-    </>
+    </Router>
   )
 }
 
