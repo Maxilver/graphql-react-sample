@@ -38,6 +38,8 @@ jobs:
         with:
           # Upload entire repository
           path: '.'
+          source_dir: ./dist  # Path to the build output folder
+          destination_dir: /  # Deploy to the root of the gh-pages branch
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
