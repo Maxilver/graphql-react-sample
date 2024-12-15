@@ -1,21 +1,23 @@
-import './App.css'
-import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
-import { Menu } from 'primereact/menu';
-
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { ApolloProvider } from "@apollo/client";
+
+import { PrimeReactProvider } from 'primereact/api';
+import { Menu } from 'primereact/menu';
 
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
+import './App.css'
 
 import Dashboard from './Dashboard/Dashboard.jsx'
 import Details from './Details/Details.jsx'
-import { ApolloProvider } from "@apollo/client";
-import { apolloClient } from "./apollo/index.js";
 import ActionsPanel from "./ActionsPanel/ActionsPanel.jsx";
 
+import { apolloClient } from "./apollo/index.js";
+
 function App () {
+  // Router items.
   const menuItems = [
     { label: 'Main', template: (item, options) => <Link to="/" className={options.className}>{item.label}</Link> },
     { label: 'Details', template: (item, options) => <Link to="/details" className={options.className}>{item.label}</Link> },
